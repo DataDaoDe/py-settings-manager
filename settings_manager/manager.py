@@ -147,10 +147,12 @@ class SettingsManager(object):
         env_data = load_yaml_file_data(p)
 
         if self._merge_base:
+            base_filename = 'base.{}'.format(self._filetype)
+            
             return self._merge_base_data_with_env_data(
                 env_data,
-                'base.yml', # todo: use same extension as env file
-                os.path.join(self._settings_dir, 'base.yml'),
+                base_filename,
+                os.path.join(self._settings_dir, base_filename),
                 load_yaml_file_data
             )
         else:

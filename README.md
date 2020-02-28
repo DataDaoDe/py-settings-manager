@@ -75,9 +75,9 @@ config/
 Your yaml files can have `.yml` or `.yaml` file extensions.
 
 ```python
-from settings_manager.manager import SettingsFile
+from settings_manager.manager import SettingsManager
 
-sm = SettingsFile(
+sm = SettingsManager(
         environment = 'test', 
         filetype = 'yaml'
         settings_dir = '/path/to/project/root/config/settings'    
@@ -105,9 +105,9 @@ config/
 ```
 
 ```python
-from settings_manager.manager import SettingsFile
+from settings_manager.manager import SettingsManager
 
-sm = SettingsFile(
+sm = SettingsManager(
         environment = 'test', 
         filetype = 'python'
         settings_dir = '/path/to/project/root/config/settings'
@@ -119,7 +119,3 @@ sm.load()
 # view settings dictionary
 sm.settings() # { 'secret-key' : 'h390h2g3', ... }
 ```
-
-## TODOS
-
-1. Add ability to merge configs when there is a `base` config file.
