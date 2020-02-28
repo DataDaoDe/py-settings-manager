@@ -3,10 +3,10 @@ from typing import (
     Any
 )
 
-from importlib import import_module
+from importlib import import_module, reload
 import re
 
-CONFIG_VAR_RE  = re.compile(r"^[A-Z_]+$")
+CONFIG_VAR_RE  = re.compile(r"^[A-Z_]+[A-Z_0-9]*$")
 
 def load_python_file_data(module_path: str) -> Dict[str, Any]:
 

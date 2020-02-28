@@ -1,4 +1,9 @@
+# python relics
 __pycache__/
 *.py[oc]
 
+# environments
 env/
+
+# testing
+sandbox/

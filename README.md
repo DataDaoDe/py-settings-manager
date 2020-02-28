@@ -10,6 +10,10 @@ The API consists of 2 functions `load()` to load the application settings and `s
 
 You can put environment variables in your yaml config files and they will be loaded from the environment when the file is loaded. Calls to get environment variables like `os.getenv()` also work in python config files. Only json config files cannot contain environment variables.
 
+You can also have `base` files i.e. `base.py` or `base.yml` or `base.json` and these will get loaded first. Then the current environment file, for isntance `test.py` will be loaded and override any variables which have the same name in `base.py`.
+
+**Deep Merging** : currently the library does not do deep merges i.e. if you have nested hashes in your config files, only top level keys will be merged, not at a fine-grained deep level.
+
 **Examples**
 
 ```yaml
@@ -39,9 +43,9 @@ config/
 ```
 
 ```python
-from settings_manager.manager import SettingsFile
+from settings_manager.manager import SettingsManager
 
-sm = SettingsFile(
+sm = SettingsManager(
         environment = 'test', 
         filetype = 'json'
         settings_dir = '/path/to/project/root/config/settings'    

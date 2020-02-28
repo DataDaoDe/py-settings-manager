@@ -2,7 +2,8 @@ import os
 from typing import (
     List,
     Dict,
-    Any
+    Any,
+    Callable
 )
 
 from settings_manager.yaml import load_yaml_file_data
@@ -38,19 +39,21 @@ def _is_yaml(file_extension: str) -> bool:
     return file_extension in ['yaml', 'yml']
         
 
-class SettingsFile:
+class SettingsManager(object):
 
     def __init__(self, 
         environment: str,
         filetype: str,
         settings_dir: str,
-        _python_settings_module: str = None
+        python_settings_module: str = None,
+        merge_base: bool = False
     ):
         self._environment = environment
         self._filetype = _ensure_valid_filetype(filetype)
         self._settings_dir = _ensure_path_exists(settings_dir)
         self._paths = settings_file_paths(self._settings_dir, self._environment, self._filetype)
         self._settings = None
+        self._merge_base = merge_base
 
         self._python_settings_module = python_settings_module
 
@@ -64,6 +67,7 @@ class SettingsFile:
 
         if len(self._existing_paths) == 2:
             raise Exception('two settings files exist for environment: `{}`'.format(self._environment))
+
 
     def load(self):
 
@@ -89,17 +93,65 @@ class SettingsFile:
             # for loading without a module path i.e. just environment `test` or `prod`
             p = '{}'.format(self._environment)
 
-        return load_python_file_data(p)
+        env_data = load_python_file_data(p)
 
+        if self._merge_base:
+            return self._merge_base_data_with_env_data(
+                env_data, 
+                'base.py',
+                '{}.base'.format(self._python_settings_module),
+                load_python_file_data,
+            )
+        else:
+            return env_data 
+
+    def _merge_base_data_with_env_data(
+        self,
+        env_data: Dict[str, Any],
+        filename: str,
+        load_arg: str,
+        load_fn: Callable[[str], Dict[str, Any]]
+    ) -> Dict[str, Any]:
+        
+        base_file = os.path.join(self._settings_dir, filename)
+    
+        if not os.path.exists(base_file):
+            raise Exception('No base file exists: `{}` not found.'.format(base_file))
+
+        result = {}
+        base_data = load_fn(load_arg)
+
+        for k1 in base_data.keys():
+            result[k1] = base_data[k1]
+        for k2 in env_data.keys():
+            result[k2] = env_data[k2]
+
+        return result
 
     def load_json_settings(self) -> Dict[str, Any]:
         p = self._existing_paths[0]
+        env_data = load_json_file_data(p)
 
-        return load_json_file_data(p)
+        if self._merge_base:
+            return self._merge_base_data_with_env_data(
+                env_data,
+                'base.json',
+                os.path.join(self._settings_dir, 'base.json'),
+                load_json_file_data
+            )
+        else:
+            return env_data
 
     def load_yaml_settings(self) -> Dict[str, Any]:
         p = self._existing_paths[0]
+        env_data = load_yaml_file_data(p)
 
-        return load_yaml_file_data(p)
-
-# manager = SettingsManager('dev', 'python', settings_dir='/foo/bar')
+        if self._merge_base:
+            return self._merge_base_data_with_env_data(
+                env_data,
+                'base.yml', # todo: use same extension as env file
+                os.path.join(self._settings_dir, 'base.yml'),
+                load_yaml_file_data
+            )
+        else:
+            return env_data
