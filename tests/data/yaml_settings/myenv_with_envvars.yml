@@ -1,0 +1,5 @@
+app_name: 'testing-123'
+something_new: 'Something Nice!'
+database:
+  host: google.com
+test_envvar: ${TEST_ENVVAR}

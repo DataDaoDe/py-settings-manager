@@ -1,0 +1,7 @@
+{
+    "language" : "German",
+    "google_keys" : {
+        "client_id" : 1234,
+        "client_secret" : "foobar"
+    }
+}

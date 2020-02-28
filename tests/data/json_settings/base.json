@@ -1,0 +1,7 @@
+{
+    "language" : "English",
+    "database_url" : "http://localhost:9292",
+    "google_keys" : {
+        "placeholder" : 9000
+    }
+}

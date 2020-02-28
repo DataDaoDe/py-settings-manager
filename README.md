@@ -119,3 +119,7 @@ sm.load()
 # view settings dictionary
 sm.settings() # { 'secret-key' : 'h390h2g3', ... }
 ```
+
+## Todos:
+
+1. Add deep merge ability

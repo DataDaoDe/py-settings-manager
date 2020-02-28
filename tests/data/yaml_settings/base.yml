@@ -1,0 +1,5 @@
+app_name: 'testing-123'
+random_number: 100
+database:
+  host: localhost
+  port: 9292
