@@ -5,5 +5,8 @@ __pycache__/
 # environments
 env/
 
+# editors
+.vscode/
+
 # testing
 sandbox/
