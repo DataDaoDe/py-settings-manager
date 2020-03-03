@@ -14,12 +14,12 @@ You can also have `base` files i.e. `base.py` or `base.yml` or `base.json` and t
 
 **Deep Merging** : currently the library does not do deep merges i.e. if you have nested hashes in your config files, only top level keys will be merged, not at a fine-grained deep level.
 
-**Examples**
+Here are some examples.
 
 ```yaml
 app:
-    secret_key: ${SECRET_KEY}
-    google_client_id: ${GOOGLE_CLIENT_ID}
+  secret_key: ${SECRET_KEY}
+  google_client_id: ${GOOGLE_CLIENT_ID}
 ```
 
 ```python

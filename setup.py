@@ -18,7 +18,7 @@ setup(
     author_email = 'jwaterfaucett@gmail.com',
     description = 'A settings manager for python applications',
     long_description = read_file('./README.md'),
-    long_description_context_type = 'text/markdown',
+    long_description_content_type = "text/markdown",
     url = 'https://github.com/DataDaoDe/py-settings-manager',
     license = 'MIT',
     packages = find_packages(),
