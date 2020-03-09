@@ -13,7 +13,7 @@ test_requirements = ['pytest']
 
 setup(
     name = 'settings_manager',
-    version = '0.1.0',
+    version = '0.1.1',
     author = 'John Faucett',
     author_email = 'jwaterfaucett@gmail.com',
     description = 'A settings manager for python applications',
