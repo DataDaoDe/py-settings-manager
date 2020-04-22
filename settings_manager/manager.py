@@ -9,7 +9,10 @@ from typing import (
 from settings_manager.yaml import load_yaml_file_data
 from settings_manager.json import load_json_file_data
 from settings_manager.python import load_python_file_data
-from settings_manager.utils import deep_dict_merge
+from settings_manager.utils import (
+    deep_dict_merge,
+    get_property
+)
 
 SETTINGS_FILETYPES = ['python', 'json', 'yaml', 'yml']
 
@@ -85,6 +88,9 @@ class SettingsManager(object):
 
     def settings(self):
         return self._settings
+
+    def get_property(self, searchpath) -> Any:
+        return get_property(self._settings, searchpath)
 
 
     def load_python_settings(self) -> Dict[str, Any]:

@@ -25,6 +25,7 @@ def test_load_json_settings_for_env():
 
     assert len(sm.settings().keys()) == 2
     assert sm.settings()['language'] == 'German'
+    assert sm.get_property('google_keys.client_id') == 1234
 
 
 def test_load_json_settings_for_env_with_base_merge():
