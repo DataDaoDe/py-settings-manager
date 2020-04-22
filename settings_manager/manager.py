@@ -9,6 +9,7 @@ from typing import (
 from settings_manager.yaml import load_yaml_file_data
 from settings_manager.json import load_json_file_data
 from settings_manager.python import load_python_file_data
+from settings_manager.utils import deep_dict_merge
 
 SETTINGS_FILETYPES = ['python', 'json', 'yaml', 'yml']
 
@@ -118,13 +119,9 @@ class SettingsManager(object):
         if not os.path.exists(base_file):
             raise Exception('No base file exists: `{}` not found.'.format(base_file))
 
-        result = {}
         base_data = load_fn(load_arg)
 
-        for k1 in base_data.keys():
-            result[k1] = base_data[k1]
-        for k2 in env_data.keys():
-            result[k2] = env_data[k2]
+        result = deep_dict_merge(base_data, env_data, add_keys=True)
 
         return result
 

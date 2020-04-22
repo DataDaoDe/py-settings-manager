@@ -42,4 +42,4 @@ def test_load_json_settings_for_env_with_base_merge():
     assert sm.settings()['database_url'] == 'http://localhost:9292'
     assert sm.settings()['google_keys']['client_id'] == 1234
     assert sm.settings()['google_keys']['client_secret'] == 'foobar'
-    assert 'placeholder' not in sm.settings()['google_keys'].keys()
+    assert 'placeholder' in sm.settings()['google_keys'].keys()
